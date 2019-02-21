@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
 		width: Dimensions.get('window').width,
 		height: Dimensions.get('window').width,
 	},
+	overlay:{
+		backgroundColor: 'rgba(0, 0, 0, .3)',
+		width: Dimensions.get('window').width,
+		height: Dimensions.get('window').width,
+	},
   detailsView: {
     padding: 10,
     backgroundColor: '#000',
@@ -113,7 +118,8 @@ class ImageDetailsScreen extends React.Component {
           </View>
         </Transition>
         <View style={styles.imageContainer}>
-						<ImageBackground style={[styles.imgBG, styles.imageContainer]} blurRadius={7} source={{ uri }} >
+						<ImageBackground style={[styles.imgBG, styles.imageContainer]} blurRadius={6} source={{ uri }} >
+							<View style={styles.overlay}></View>
 							<Transition shared={uri}>
 								<FastImage style={styles.detailsImage} source={{ uri }} />
 							</Transition>
