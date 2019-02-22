@@ -112,8 +112,6 @@ class ImageDetailsScreen extends React.Component {
 										{ translateY: imageTranslateY },
 										{ scale: imageScale }
 									],
-									// transform: [{ translateY: imageTranslateY }],
-									// transform: [{ scale: imageScale }],
 								},
 							]}
 							source={{ uri }} />
@@ -124,6 +122,7 @@ class ImageDetailsScreen extends React.Component {
           <Animated.ScrollView style={styles.detailsView}
 					contentContainerStyle={styles.scrollViewContent}
 					scrollEventThrottle={16}
+					snapToOffsets={[HEADER_MIN_HEIGHT,]}
 					onScroll={Animated.event(
 	      		[{
 							nativeEvent: {contentOffset: {y: this.state.scrollY}}
