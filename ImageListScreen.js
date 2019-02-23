@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, Button, TouchableOpacity, FlatList, Image, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
-import {styles} from 'styles.js';
+import styles from './styles';
 
 
 import ImageGrid from './ImageGrid';

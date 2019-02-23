@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Dimensions, Button, TouchableOpacity, FlatList, Image, StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
-import {styles} from 'styles.js';
+import styles from './styles';
 import chunk from 'lodash.chunk';
 import { FluidNavigator, Transition } from 'react-navigation-fluid-transitions';
 import FastImage from 'react-native-fast-image'
