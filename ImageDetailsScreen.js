@@ -133,6 +133,7 @@ class ImageDetailsScreen extends React.Component {
 						contentContainerStyle={styles.scrollViewContent}
 						scrollEventThrottle={16}
 						snapToOffsets={[HEADER_MIN_HEIGHT]}
+						snapToEnd={false}
 						decelerationRate="fast"
 						onScroll={Animated.event([
 							{
