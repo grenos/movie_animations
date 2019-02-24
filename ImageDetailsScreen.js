@@ -28,6 +28,7 @@ const _WH = Dimensions.get("window").height;
 
 const HEADER_MAX_HEIGHT = hp("50%");
 const HEADER_MIN_HEIGHT = hp("20%");
+const TITLE_SMALL = hp('53%');
 const HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 
 class ImageDetailsScreen extends React.Component {
@@ -39,15 +40,25 @@ class ImageDetailsScreen extends React.Component {
 		};
 	}
 
-	_renderScrollViewContent() {
-		const data = Array.from({ length: 30 });
+	_renderScrollViewContent(titleScale, titleTranslate) {
 		return (
-			<View style={styles.scrollViewContent}>
-				{data.map((_, i) => (
-					<View key={i} style={styles.row}>
-						<Text style={{ color: "#fff" }}>{i}</Text>
-					</View>
-				))}
+			<View style={{paddingHorizontal: 20, alignItems: 'center'}}>
+				<View style={{justifyContent: 'flex-start', alignItems: 'center'}}>
+						<Animated.Text style={[
+									styles.title,
+									{
+										transform: [
+											{ translateX: titleTranslate },
+											{ scale: titleScale }
+										]
+									}
+								]}>
+							Fantastic
+						</Animated.Text>
+				</View>
+
+				<Text style={{color: 'white', fontSize: 16}}>Lorem ipsum dolor amet pBR&B gluten-free shaman cornhole ethical. Butcher green juice blue bottle master cleanse, quinoa hashtag tofu next level microdosing raclette tbh ennui. Palo santo af hot chicken, try-hard actually mixtape lo-fi beard VHS. Pug meggings tacos bicycle rights cornhole organic chambray affogato chartreuse pork belly hammock palo santo. Chia waistcoat irony banjo roof party crucifix tousled slow-carb.</Text>
+				<View style={{height: 400, backgroundColor: 'pink', zIndex: 3}}></View>
 				<Button title="Back" onPress={() => this.props.navigation.goBack()} />
 			</View>
 		);
@@ -74,16 +85,16 @@ class ImageDetailsScreen extends React.Component {
 			outputRange: [1, 0.4],
 			extrapolate: "clamp"
 		});
-		// const titleScale = this.state.scrollY.interpolate({
-		// 	inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-		// 	outputRange: [1, 1, 0.8],
-		// 	extrapolate: 'clamp',
-		// });
-		// const titleTranslate = this.state.scrollY.interpolate({
-		// 	inputRange: [0, HEADER_SCROLL_DISTANCE / 2, HEADER_SCROLL_DISTANCE],
-		// 	outputRange: [0, 0, -8],
-		// 	extrapolate: 'clamp',
-		// });
+		const titleScale = this.state.scrollY.interpolate({
+			inputRange: [HEADER_MIN_HEIGHT, HEADER_SCROLL_DISTANCE],
+			outputRange: [1, 0.6],
+			extrapolate: 'clamp',
+		});
+		const titleTranslate = this.state.scrollY.interpolate({
+			inputRange: [HEADER_MIN_HEIGHT, HEADER_SCROLL_DISTANCE],
+			outputRange: [0, _WW - wp('85%')],
+			extrapolate: 'clamp',
+		});
 
 		const { navigation } = this.props;
 		const uri = navigation.getParam("url", "");
@@ -105,7 +116,7 @@ class ImageDetailsScreen extends React.Component {
 					<Transition appear="top">
 						<Animated.Image
 							style={[styles.imgBG, styles.imageContainer]}
-							blurRadius={6}
+							blurRadius={3}
 							source={{ uri }}
 							resizeMode="cover"
 						/>
@@ -127,12 +138,13 @@ class ImageDetailsScreen extends React.Component {
 						/>
 					</Transition>
 				</Animated.View>
+
 				<Transition appear="bottom">
 					<Animated.ScrollView
 						style={styles.detailsView}
 						contentContainerStyle={styles.scrollViewContent}
 						scrollEventThrottle={16}
-						snapToOffsets={[HEADER_MIN_HEIGHT]}
+						snapToOffsets={[HEADER_MIN_HEIGHT, TITLE_SMALL]}
 						snapToEnd={false}
 						decelerationRate="fast"
 						onScroll={Animated.event([
@@ -141,7 +153,7 @@ class ImageDetailsScreen extends React.Component {
 							}
 						])}
 					>
-						{this._renderScrollViewContent()}
+						{this._renderScrollViewContent(titleScale, titleTranslate)}
 					</Animated.ScrollView>
 				</Transition>
 			</View>
@@ -198,11 +210,12 @@ export const styles = StyleSheet.create({
 		padding: 10,
 		backgroundColor: "#000",
 		flex: 1,
-		zIndex: -2
+		zIndex: -2,
 	},
 	scrollViewContent: {
-		paddingTop: hp("35%"),
-		zIndex: -2
+		paddingTop: hp("70%"),
+		zIndex: -2,
+
 	},
 	buttonContainer: {
 		flex: 1,
@@ -210,6 +223,11 @@ export const styles = StyleSheet.create({
 	},
 	row: {
 		margin: 20
+	},
+	title:{
+		color: 'white',
+		fontSize: 40,
+		paddingBottom: 50
 	}
 });
 
